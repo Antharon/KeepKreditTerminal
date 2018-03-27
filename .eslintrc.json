@@ -1,0 +1,59 @@
+{
+  "extends": ["airbnb-base"],
+  "env": {
+    "browser": true,
+    "commonjs": true
+  },
+  "globals": {
+    // Browser stuff
+    "browser": false,
+    // Handled by src/client/globals
+    "spBgConfig": true,
+    "spLogger": true,
+    "setSpLogger": true
+  },
+  "settings": {
+    // Externals should be resolved by webpack but...
+    // https://github.com/benmosher/eslint-plugin-import/issues/605
+    "import/core-modules": [
+      "external-forge",
+      "external-core",
+      "external-services"
+    ]
+  },
+  "rules": {
+    // They forbid `for ... in`
+    "no-restricted-syntax": [
+      "error",
+      "DebuggerStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ],
+    // Allow longer lines
+    "max-len": [
+      "error",
+      200,
+      2,
+      {
+        "ignoreUrls": true,
+        "ignoreComments": true
+      }
+    ],
+    // We need to override this since we load devDeps from our etc folder
+    "import/no-extraneous-dependencies": ["error", {
+      "devDependencies": [
+        "etc/**",
+        "gulpfile.js"
+      ],
+      "optionalDependencies": false
+    }],
+    "comma-dangle": ["error", "never"], // Dangling commas are ugly.
+    "no-var": "off",                    // Way too many to fix. We should reduce var usage to minimum though.
+    "func-names": "off",                // Requires to name every callback.
+    "no-underscore-dangle": "off",      // Used by Pouch, but we also use this sometimes.
+    "prefer-arrow-callback": "off",     // Too much work.
+    "no-param-reassign": "off",         // Naming stuff is hard and too much work.
+    "prefer-const": "off",              // Must use novar first
+    "no-plusplus": "off"                // Forces you to do `i += 1` everywhere
+  }
+}
